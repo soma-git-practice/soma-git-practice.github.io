@@ -1,0 +1,8 @@
+- name: すべて
+  link: /
+- name: ワーク
+  link: /work.html
+- name: 場所
+  link: /place.html
+- name: 食べ物
+  link: /food.html

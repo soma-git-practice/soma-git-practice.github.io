@@ -1,0 +1,15 @@
+title: てきとうブログ
+url: "https://soma-git-practice.github.io"
+timezone: Asia/Tokyo
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - todo.md
