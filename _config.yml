@@ -13,3 +13,4 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - todo.md
+  - Rakefile
