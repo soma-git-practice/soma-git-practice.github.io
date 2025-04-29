@@ -1,0 +1,101 @@
+---
+layout: post
+overview:  fetchを使ってみた
+---
+
+<h2>index.html</h2>
+<pre>
+  <code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;Cache-Control&quot; content=&quot;no-cache&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;button type=&quot;button&quot; class=&quot;hoge&quot; id=&quot;a&quot;&gt;動作確認 team A&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;hoge&quot; id=&quot;b&quot;&gt;動作確認 team B&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;hoge&quot; id=&quot;c&quot;&gt;動作確認 team C&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;hoge&quot; id=&quot;e&quot;&gt;動作確認 エラー&lt;/button&gt;
+    &lt;select disabled=&quot;disabled&quot;&gt;&lt;/select&gt;
+    &lt;script src=&quot;index.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+  </code>
+</pre>
+
+<h2>team_a.json</h2>
+<pre>
+  <code>
+{
+  "team": "A",
+  "member": [
+    { "name": "田中", "age": 25 },
+    { "name": "佐藤", "age": 42 },
+    { "name": "鈴木", "age": 32 }
+  ]
+}
+  </code>
+</pre>
+
+<h2>team_b.json</h2>
+<pre>
+  <code>
+{
+  "team": "B",
+  "member": [
+    { "name": "須藤", "age": 38 },
+    { "name": "木村", "age": 23 },
+    { "name": "和田", "age": 29 }
+  ]
+}
+  </code>
+</pre>
+
+<h2>team_c.json</h2>
+<pre>
+  <code>
+{
+  "team": "C",
+  "member": [
+    { "name": "中村", "age": 30 },
+    { "name": "小林", "age": 27 },
+    { "name": "山本", "age": 35 }
+  ]
+}
+  </code>
+</pre>
+
+<h2>index.js</h2>
+<pre>
+  <code>
+document.querySelectorAll('.hoge').forEach(function (elm) {
+  elm.addEventListener('click', async function (event) {
+    const selecter = document.querySelector('select');
+    fetch(`./team_${this.id}.json`)
+      .then((res) =&gt; {
+        return res.ok ? res.json() : { &quot;error&quot;: true, &quot;status&quot;: res.status, &quot;message&quot;: res.statusText } ;
+      })
+      .then((jsn) =&gt; {
+        if (jsn.error) {
+          selecter.disabled = true;
+          selecter.innerHTML = ''
+        }
+        else {
+          selecter.disabled = false;
+          selecter.innerHTML = ''
+
+          jsn.member.forEach((val) =&gt; {
+            const opt = document.createElement('option');
+            opt.text = val.name;
+            opt.value = val.age;
+            selecter.add(opt);
+          })
+        }
+      });
+  })
+})
+  </code>
+</pre>
